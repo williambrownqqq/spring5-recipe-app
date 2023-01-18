@@ -5,12 +5,14 @@ import com.zanchenko.alexey.spring5recipeapp.domain.UnitOfMeasure;
 import com.zanchenko.alexey.spring5recipeapp.repositories.CategoryRepository;
 import com.zanchenko.alexey.spring5recipeapp.repositories.UnitOfMeasureRepository;
 import com.zanchenko.alexey.spring5recipeapp.services.RecipeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Optional;
-
+@Slf4j
 @Controller // this annotation makes this a Spring Bean
 public class IndexController {
 
@@ -27,9 +29,9 @@ public class IndexController {
         this.recipeService = recipeService;
     }
 
-    @RequestMapping({"", "/", "index"})
-    public String getIndexPage(Model model){
-        System.out.println("load index page");
+    @GetMapping({"", "/", "index"})
+    public String getIndexPage(Model model){ // model - по сути map - отображение (model:object)
+        log.debug("Getting index page");
 //        Optional<Category> categoryOptional = categoryRepository.findByDescription("American");
 //        Optional<UnitOfMeasure> unitOfMeasureOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
 //
