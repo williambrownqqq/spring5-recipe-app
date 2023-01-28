@@ -23,7 +23,7 @@ public class Recipe {
     private String directions;
 
     //private Difficulty difficulty;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe") // from recipe to ingedient
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe", orphanRemoval = true) // from recipe to ingedient // orphanRemoval - remove value from DB if it was delete from List
     private Set<Ingredient> ingredients = new HashSet<>();
     // So that defines the
     //relationship from Recipe class and we're saying that this Recipe will get stored
