@@ -2,6 +2,7 @@ package com.zanchenko.alexey.spring5recipeapp.controllers;
 
 import com.zanchenko.alexey.spring5recipeapp.commands.RecipeCommand;
 import com.zanchenko.alexey.spring5recipeapp.domain.Recipe;
+import com.zanchenko.alexey.spring5recipeapp.exceptions.NotFoundException;
 import com.zanchenko.alexey.spring5recipeapp.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -87,5 +88,21 @@ class RecipeControllerTest {
 
         verify(recipeService, times(1)).deleteById(anyLong());
     }
+    @Test
+    public void testGetRecipeNotFound() throws Exception {
 
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("404error"));
+    }
+
+    @Test
+    public void testGetRecipeNumberFormat() throws Exception {
+
+        mockMvc.perform(get("/recipe/abc/show"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400error"));
+    }
 }
